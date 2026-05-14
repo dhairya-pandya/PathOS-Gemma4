@@ -1,0 +1,53 @@
+# PathOS — Ollama Modelfile
+# =========================
+# Deploys the PathOS fine-tuned Gemma 4 E2B model locally.
+#
+# Prerequisites:
+#   Place these files in the SAME directory as this Modelfile:
+#     - gemma-4-e2b-it.Q4_K_M.gguf       (3.43 GB — language model)
+#     - gemma-4-e2b-it.F16-mmproj.gguf    (986 MB  — vision projector)
+#
+# Build & run:
+#   ollama create pathos -f Modelfile
+#   ollama run pathos "What tissue is visible in this image?"
+#
+# With an image:
+#   ollama run pathos "Is malignancy present?" --images slide.png
+#
+# Origin:
+#   GGUF:    https://huggingface.co/ByteKnight28/pathos-gemma4-histopathology-rl-GGUF
+#   Adapter: https://huggingface.co/dhairyapandya/pathos-gemma4-histopathology-rl
+#   Base:    google/gemma-4-e2b-it (fine-tuned via Unsloth SFT + GRPO)
+
+FROM ./gemma-4-e2b-it.Q4_K_M.gguf
+PROJECTION ./gemma-4-e2b-it.F16-mmproj.gguf
+
+# ── Inference parameters ─────────────────────────────────────
+PARAMETER temperature 0.1
+PARAMETER num_predict 256
+PARAMETER stop "</answer>"
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+
+# ── System prompt ────────────────────────────────────────────
+SYSTEM """You are PathOS, an expert AI pathologist specialising in H&E stained histopathology analysis.
+
+You analyse digitized tissue slide patches and provide precise diagnostic assessments.
+
+RULES:
+1. Always commit to a specific answer. Never hedge, refuse, or say "cannot determine".
+2. For YES/NO questions: respond with <answer>yes</answer> or <answer>no</answer> FIRST, then one sentence of evidence.
+3. For open-ended questions: reason briefly from visible morphology, then end with <answer>your specific answer</answer>.
+4. Be concise. Focus on what you observe in the image.
+5. Use standard pathology terminology.
+
+You were trained on NCT-CRC-HE-100K (9 tissue classes), PathVQA (clinical Q&A), and QUILT-LLaVA-Instruct (histopathology reasoning) datasets.
+You were reinforced with GRPO to eliminate hedging behaviour and commit to precise answers."""
+
+# ── Template ─────────────────────────────────────────────────
+TEMPLATE """{{ if .System }}<start_of_turn>system
+{{ .System }}<end_of_turn>
+{{ end }}{{ if .Prompt }}<start_of_turn>user
+{{ .Prompt }}<end_of_turn>
+<start_of_turn>model
+{{ end }}{{ .Response }}<end_of_turn>"""
