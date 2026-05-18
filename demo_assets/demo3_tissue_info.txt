@@ -1,0 +1,2 @@
+Question: What tissue type is present in this histopathology patch?
+Ground Truth Answer: Debris (DEB)

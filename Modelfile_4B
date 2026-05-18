@@ -1,17 +1,16 @@
-# PathOS — Ollama Modelfile (Distilled v3)
+# PathOS — Ollama Modelfile (Distilled v3 - 4-bit Quantized)
 # ==========================================
 # Deploy:
-#   ollama create pathos -f Modelfile
-#   ollama run pathos "Is malignancy present?"
+#   ollama create dhairyapandya/pathos:4b -f Modelfile_4B
+#   ollama push dhairyapandya/pathos:4b
 #
 # Or pull directly from HuggingFace (no Modelfile needed):
-#   ollama run hf.co/dhairyapandya/pathos-gemma4-distilled-GGUF:Q8_0
+#   ollama run hf.co/dhairyapandya/pathos-gemma4-distilled-rl-4B-GGUF
 #
-# Source: https://huggingface.co/dhairyapandya/pathos-gemma4-distilled-GGUF
+# Source: https://huggingface.co/dhairyapandya/pathos-gemma4-distilled-rl-4B-GGUF
 
-FROM dhairyapandya/pathos:latest
+FROM dhairyapandya/pathos:4b
 ADAPTER ./mmproj.gguf
-
 # ── Inference parameters ─────────────────────────────────────
 PARAMETER temperature 0.1
 PARAMETER num_predict 1024

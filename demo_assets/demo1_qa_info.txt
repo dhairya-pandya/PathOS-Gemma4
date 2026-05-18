@@ -1,0 +1,3 @@
+Question: is embolus derived from a lower-extremity deep venous 
+thrombus lodged in a pulmonary artery branch?
+Ground Truth Answer: yes

@@ -1,0 +1,3 @@
+Question: where are liver stem cells (oval cells) 
+located?
+Ground Truth Answer: in the canals of hering
