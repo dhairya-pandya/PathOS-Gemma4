@@ -128,7 +128,9 @@ ollama create pathos -f Modelfile
 ollama run pathos "Is malignancy present? slide.png"
 ```
 
-### Option 3: llama.cpp (no Ollama needed)
+### Option 3: Direct llama.cpp (Maximum Performance on Edge Devices)
+
+> **💡 Hackathon Track Highlight:** PathOS relies on **llama.cpp** to achieve its extreme performance on resource-constrained hardware. By exporting the Gemma 4 weights into the optimized GGUF format and running inference directly through `llama.cpp`, PathOS eliminates API overhead, enabling 128K context window analysis natively on edge devices with no dedicated GPU.
 
 ```bash
 # Install llama.cpp
@@ -159,13 +161,13 @@ docker model run hf.co/dhairyapandya/pathos-gemma4-distilled-GGUF:Q8_0
 | **Disk** | 3 GB free (for 4b model) | 5 GB+ free |
 | **OS** | Windows 10+, macOS 12+, Linux, Raspberry Pi OS | Any |
 
-### 🚀 Edge Deployment (Raspberry Pi & SBCs)
+### 🚀 Edge Deployment via llama.cpp (Raspberry Pi & SBCs)
 
-Because of the extreme efficiency of the Gemma 4 E2B architecture combined with 4-bit quantization, the `4b` model is specifically designed for Edge AI deployment.
+Because of the extreme efficiency of the Gemma 4 architecture combined with 4-bit GGUF quantization powered by **llama.cpp**, the `4b` model is specifically designed for Edge AI deployment.
 
-You can run PathOS as a local, offline AI pathologist on resource-constrained devices like the **Raspberry Pi 5 (8GB)** or **Jetson Nano**.
+By leveraging `llama.cpp`'s native C/C++ backend, PathOS can run as a completely offline AI pathologist on severely resource-constrained devices like the **Raspberry Pi 5 (8GB)** or **Jetson Nano**, dynamically utilizing CPU threading to maximize token generation without requiring a GPU.
 
-**Performance estimates (No GPU, CPU only):**
+**Performance estimates (No GPU, CPU only via llama.cpp):**
 
 | Hardware | Model Version | Speed |
 |---|---|---|
