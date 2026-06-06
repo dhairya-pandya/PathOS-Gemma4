@@ -3,6 +3,9 @@
 > Offline AI diagnostic assistant that runs on any laptop via Ollama. No GPU required.
 
 PathOS is a distilled Gemma 4 model fine-tuned for H&E stained histopathology analysis. It produces definitive, structured diagnoses with `<answer>` tags — no hedging, no "cannot determine".
+Our model has got more than 500 downaloads across various versions on Huggingface! 
+
+Go ahead and use our model on : https://huggingface.co/dhairyapandya/pathos-gemma4-distilled-rl-4B-GGUF
 
 ## ⚡ Quick Start (2 commands)
 
