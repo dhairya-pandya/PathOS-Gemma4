@@ -232,4 +232,4 @@ PathOS is a research tool for **educational and assistive purposes only**. It is
 
 ## 📄 License
 
-Apache 2.0
+This Repository and Relevant Work has been released under the [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license. 
